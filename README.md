@@ -1,2 +1,2 @@
-# da401econNFL
-Staggered DiD analysis of how NFL team success affects metro-level GDP and personal income.
+# Effect of NFL team success on metro-level economic GDP of the area and personal income
+The NFL is a massive business where its success is associated with local economic growth. The following project asks whether major NFL success shocks are associated with measurable change in the metro-level economic area in the following year. More specifically, this early results study will look at if a metro area's first Super Bowl is followed by changes to the metro level GDP, or personal income per capita. Based on the proper literature, we expect there to be modest positive effects that aren’t that dramatic, since sports related spending may be offset by crowding out or leakage. Also, GDP can dilute local shocks. 
