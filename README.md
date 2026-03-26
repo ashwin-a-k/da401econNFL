@@ -6,5 +6,7 @@ The data used in this study has a mix of economic data and NFL data that is comb
 The data was constructed using the CodeFiles/FinalDatasetCreation.rmd. The following rmd uses files within the RawData folder that were downloaded from the U.S Bureau of Economic Analysis, each queried to include the following years presented in the files. They were merged with nflverse data that was downloaded as an R package (documentation can be found in the nflverse repo on github). To construct the final data, just run this file and the data will be created. 
 ## References
 Carl S, Baldwin B, Sharpe L, Ho T, Edwards J (2025). nflverse: Easily Install and Load the 'nflverse'. R package version 1.0.3.9001, https://nflverse.nflverse.com/.
+
 U.S. Bureau of Economic Analysis, "CAINC1 County personal income summary: personal income, population, per capita personal income" (accessed Saturday, March 7, 2026).
+
 U.S. Bureau of Economic Analysis, "CAGDP1 County gross domestic product (GDP) summary" (accessed Saturday, March 7, 2026).
