@@ -1,0 +1,389 @@
+---
+title: "DataAccess"
+output: html_document
+date: "2026-03-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## This is creating nfl_team_season
+
+```{r}
+library(nflreadr)
+library(dplyr)
+
+sched <- load_schedules(2005:2023)
+
+home_reg <- sched %>%
+  filter(game_type == "REG") %>%
+  transmute(
+    season,
+    team = home_team,
+    points_for = home_score,
+    points_against = away_score,
+    win = as.integer(home_score > away_score),
+    loss = as.integer(home_score < away_score),
+    tie = as.integer(home_score == away_score)
+  )
+
+away_reg <- sched %>%
+  filter(game_type == "REG") %>%
+  transmute(
+    season,
+    team = away_team,
+    points_for = away_score,
+    points_against = home_score,
+    win = as.integer(away_score > home_score),
+    loss = as.integer(away_score < home_score),
+    tie = as.integer(away_score == home_score)
+  )
+
+reg_team_season <- bind_rows(home_reg, away_reg) %>%
+  group_by(season, team) %>%
+  summarise(
+    wins = sum(win, na.rm = TRUE),
+    losses = sum(loss, na.rm = TRUE),
+    ties = sum(tie, na.rm = TRUE),
+    games_played = n(),
+    win_pct = (wins + 0.5 * ties) / games_played,
+    .groups = "drop"
+  )
+
+
+post_types <- c("WC", "DIV", "CON", "SB")
+
+home_post <- sched %>%
+  filter(game_type %in% post_types) %>%
+  transmute(
+    season,
+    team = home_team,
+    game_type,
+    playoff_game = 1L,
+    playoff_win = as.integer(home_score > away_score),
+    won_conference = as.integer(game_type == "CON" & home_score > away_score),
+    super_bowl_appearance = as.integer(game_type == "SB"),
+    super_bowl_win = as.integer(game_type == "SB" & home_score > away_score)
+  )
+
+away_post <- sched %>%
+  filter(game_type %in% post_types) %>%
+  transmute(
+    season,
+    team = away_team,
+    game_type,
+    playoff_game = 1L,
+    playoff_win = as.integer(away_score > home_score),
+    won_conference = as.integer(game_type == "CON" & away_score > home_score),
+    super_bowl_appearance = as.integer(game_type == "SB"),
+    super_bowl_win = as.integer(game_type == "SB" & away_score > home_score)
+  )
+
+post_team_season <- bind_rows(home_post, away_post) %>%
+  group_by(season, team) %>%
+  summarise(
+    made_playoffs = as.integer(sum(playoff_game, na.rm = TRUE) > 0),
+    playoff_wins = sum(playoff_win, na.rm = TRUE),
+    won_conference = as.integer(sum(won_conference, na.rm = TRUE) > 0),
+    super_bowl_appearance = as.integer(sum(super_bowl_appearance, na.rm = TRUE) > 0),
+    super_bowl_win = as.integer(sum(super_bowl_win, na.rm = TRUE) > 0),
+    .groups = "drop"
+  )
+
+# -----------------------------
+# Final team-season dataset
+# -----------------------------
+nfl_team_season <- reg_team_season %>%
+  left_join(post_team_season, by = c("season", "team")) %>%
+  mutate(
+    made_playoffs = if_else(is.na(made_playoffs), 0L, made_playoffs),
+    playoff_wins = if_else(is.na(playoff_wins), 0L, playoff_wins),
+    won_conference = if_else(is.na(won_conference), 0L, won_conference),
+    super_bowl_appearance = if_else(is.na(super_bowl_appearance), 0L, super_bowl_appearance),
+    super_bowl_win = if_else(is.na(super_bowl_win), 0L, super_bowl_win)
+  ) %>%
+  arrange(season, team)
+
+write.csv(nfl_team_season, "nfl_team_season.csv", row.names = FALSE)
+```
+
+## Now we must create team_metro_crosswalk
+```{r}
+library(dplyr)
+
+team_metro_crosswalk <- nfl_team_season %>%
+  select(team, season) %>%
+  distinct() %>%
+  mutate(
+    metro_id = case_when(
+      team == "ARI" ~ "PHX",
+      team == "ATL" ~ "ATL",
+      team == "BAL" ~ "BAL",
+      team == "BUF" ~ "BUF",
+      team == "CAR" ~ "CLT",
+      team == "CHI" ~ "CHI",
+      team == "CIN" ~ "CIN",
+      team == "CLE" ~ "CLE",
+      team == "DAL" ~ "DAL",
+      team == "DEN" ~ "DEN",
+      team == "DET" ~ "DET",
+      team == "GB"  ~ "GB",
+      team == "HOU" ~ "HOU",
+      team == "IND" ~ "IND",
+      team == "JAX" ~ "JAX",
+      team == "KC"  ~ "KC",
+      team == "MIA" ~ "MIA",
+      team == "MIN" ~ "MIN",
+      team == "NE"  ~ "BOS",
+      team == "NO"  ~ "NO",
+      team == "NYG" ~ "NYC",
+      team == "NYJ" ~ "NYC",
+      team == "OAK" ~ "SF",
+      team == "LV"  ~ "LV",
+      team == "PHI" ~ "PHL",
+      team == "PIT" ~ "PIT",
+      team == "SD"  ~ "SD",
+      team == "LAC" ~ "LAX",
+      team == "SEA" ~ "SEA",
+      team == "SF"  ~ "SF",
+      team == "STL" ~ "STL",
+      team == "LAR" ~ "LAX",
+      team == "LA" ~ "LAX",
+      team == "TB"  ~ "TB",
+      team == "TEN" ~ "NSH",
+      team == "WAS" ~ "WAS",
+      TRUE ~ NA_character_
+    ),
+    metro_name = case_when(
+      metro_id == "PHX" ~ "Phoenix Metro",
+      metro_id == "ATL" ~ "Atlanta Metro",
+      metro_id == "BAL" ~ "Baltimore Metro",
+      metro_id == "BUF" ~ "Buffalo Metro",
+      metro_id == "CLT" ~ "Charlotte Metro",
+      metro_id == "CHI" ~ "Chicago Metro",
+      metro_id == "CIN" ~ "Cincinnati Metro",
+      metro_id == "CLE" ~ "Cleveland Metro",
+      metro_id == "DAL" ~ "Dallas Metro",
+      metro_id == "DEN" ~ "Denver Metro",
+      metro_id == "DET" ~ "Detroit Metro",
+      metro_id == "GB"  ~ "Green Bay Metro",
+      metro_id == "HOU" ~ "Houston Metro",
+      metro_id == "IND" ~ "Indianapolis Metro",
+      metro_id == "JAX" ~ "Jacksonville Metro",
+      metro_id == "KC"  ~ "Kansas City Metro",
+      metro_id == "MIA" ~ "Miami Metro",
+      metro_id == "MIN" ~ "Minneapolis Metro",
+      metro_id == "BOS" ~ "Boston Metro",
+      metro_id == "NO"  ~ "New Orleans Metro",
+      metro_id == "NYC" ~ "New York Metro",
+      metro_id == "SF"  ~ "San Francisco-Oakland Metro",
+      metro_id == "LV"  ~ "Las Vegas Metro",
+      metro_id == "PHL" ~ "Philadelphia Metro",
+      metro_id == "PIT" ~ "Pittsburgh Metro",
+      metro_id == "SD"  ~ "San Diego Metro",
+      metro_id == "LAX" ~ "Los Angeles Metro",
+      metro_id == "SEA" ~ "Seattle Metro",
+      metro_id == "STL" ~ "St. Louis Metro",
+      metro_id == "TB"  ~ "Tampa Metro",
+      metro_id == "NSH" ~ "Nashville Metro",
+      metro_id == "WAS" ~ "Washington Metro",
+      TRUE ~ NA_character_
+    )
+  )
+
+write.csv(team_metro_crosswalk, "nfl_team_metro_crosswalk.csv", row.names = FALSE)
+```
+
+```{r}
+nfl_team_with_metro <- nfl_team_season %>%
+  left_join(team_metro_crosswalk, by = c("team", "season"))
+```
+
+
+## Build NFL Metro Season
+```{r}
+library(dplyr)
+
+nfl_metro_season <- nfl_team_with_metro %>%
+  group_by(metro_id, metro_name, season) %>%
+  summarise(
+    num_teams = n(),
+    total_wins = sum(wins, na.rm = TRUE),
+    total_losses = sum(losses, na.rm = TRUE),
+    total_ties = sum(ties, na.rm = TRUE),
+    avg_win_pct = mean(win_pct, na.rm = TRUE),
+    max_win_pct = max(win_pct, na.rm = TRUE),
+    any_playoff_team = as.integer(max(made_playoffs, na.rm = TRUE) > 0),
+    total_playoff_wins = sum(playoff_wins, na.rm = TRUE),
+    any_conference_champ = as.integer(max(won_conference, na.rm = TRUE) > 0),
+    any_super_bowl_appearance = as.integer(max(super_bowl_appearance, na.rm = TRUE) > 0),
+    any_super_bowl_win = as.integer(max(super_bowl_win, na.rm = TRUE) > 0),
+    .groups = "drop"
+  ) %>%
+  arrange(season, metro_id)
+
+write.csv(nfl_metro_season, "../RawData/nfl_metro_season.csv", row.names = FALSE)
+```
+
+
+## Final Dataset
+It is time to make the final dataset. This will merge all of the datasets together, and it should look like this
+```{r}
+library(tidyverse)
+
+read_bea_county_file <- function(file_path) {
+  raw_lines <- readLines(file_path, warn = FALSE)
+
+  header_idx <- which(
+    str_detect(raw_lines, "^GeoFIPS,GeoName,") |
+      str_detect(raw_lines, "^GeoFIPS,GeoName$") |
+      str_detect(raw_lines, "^GeoFIPS,GeoName,\\d{4}")
+  )[1]
+
+  if (is.na(header_idx)) {
+    stop(paste("Could not find a GeoFIPS/GeoName header in:", file_path))
+  }
+
+  df <- read_csv(
+    file_path,
+    skip = header_idx - 1,
+    show_col_types = FALSE
+  )
+
+  names(df)[1:2] <- c("GeoFIPS", "GeoName")
+
+  df
+}
+
+make_bea_long <- function(df, value_name) {
+  df %>%
+    mutate(
+      GeoFIPS = str_pad(as.character(GeoFIPS), width = 5, side = "left", pad = "0")
+    ) %>%
+    pivot_longer(
+      cols = -c(GeoFIPS, GeoName),
+      names_to = "year",
+      values_to = value_name
+    ) %>%
+    mutate(
+      year = readr::parse_number(year),
+      across(all_of(value_name), as.numeric)
+    ) %>%
+    rename(
+      county_fips = GeoFIPS,
+      county_geoname = GeoName
+    )
+}
+
+inc_0106 <- read_bea_county_file("../RawData/PersonalIncome2001to2006.csv")
+inc_0715 <- read_bea_county_file("../RawData/PersonalIncome2007to2015.csv")
+inc_1624 <- read_bea_county_file("../RawData/PersonalIncome2016to2024.csv")
+
+
+income_all <- bind_rows(
+  make_bea_long(inc_0106, "personal_income_pc"),
+  make_bea_long(inc_0715, "personal_income_pc"),
+  make_bea_long(inc_1624, "personal_income_pc")
+)
+
+
+# read the GDP files
+gdp_0106 <- read_bea_county_file("../RawData/GDP2001to2006.csv")
+gdp_0715 <- read_bea_county_file("../RawData/GDP2007to2015.csv")
+gdp_1624 <- read_bea_county_file("../RawData/GDP2016to2024.csv")
+
+gdp_all <- bind_rows(
+  make_bea_long(gdp_0106, "gdp"),
+  make_bea_long(gdp_0715, "gdp"),
+  make_bea_long(gdp_1624, "gdp")
+)
+
+metro_county_crosswalk <- read_csv(
+  "../RawData/metro_county_crosswalk_compact.csv",
+  col_types = cols(
+    metro_id = col_character(),
+    metro_name = col_character(),
+    county_fips = col_character(),
+    county_name = col_character(),
+    state_abbr = col_character(),
+    assignment_order = col_double(),
+    selection_style = col_character()
+  ),
+  show_col_types = FALSE
+) %>%
+  mutate(
+    county_fips = str_pad(county_fips, width = 5, side = "left", pad = "0")
+  )
+
+nfl_metro_season <- read_csv(
+  "../RawData/nfl_metro_season.csv",
+  col_types = cols(
+    metro_id = col_character(),
+    metro_name = col_character(),
+    season = col_integer(),
+    num_teams = col_integer(),
+    total_wins = col_double(),
+    total_losses = col_double(),
+    total_ties = col_double(),
+    avg_win_pct = col_double(),
+    max_win_pct = col_double(),
+    any_playoff_team = col_integer(),
+    total_playoff_wins = col_double(),
+    any_conference_champ = col_integer(),
+    any_super_bowl_appearance = col_integer(),
+    any_super_bowl_win = col_integer()
+  ),
+  show_col_types = FALSE
+)
+
+nfl_team_metro_crosswalk <- read_csv("../RawData/nfl_team_metro_crosswalk.csv", show_col_types = FALSE)
+nfl_team_season <- read_csv("../RawData/nfl_team_season.csv", show_col_types = FALSE)
+
+#county GDP to metro year
+metro_gdp <- gdp_all %>%
+  inner_join(metro_county_crosswalk, by = "county_fips") %>%
+  group_by(metro_id, metro_name, year) %>%
+  summarise(
+    metro_gdp = sum(gdp, na.rm = TRUE),
+    gdp_counties_used = n_distinct(county_fips),
+    .groups = "drop"
+  )
+
+# Aggregate county personal income to metro-year
+# Since this appears to be per-capita personal income, use the average across included counties.
+metro_income <- income_all %>%
+  inner_join(metro_county_crosswalk, by = "county_fips") %>%
+  group_by(metro_id, metro_name, year) %>%
+  summarise(
+    metro_personal_income_pc = mean(personal_income_pc, na.rm = TRUE),
+    income_counties_used = n_distinct(county_fips),
+    .groups = "drop"
+  )
+
+#merging econ indicators 
+metro_econ_year <- metro_gdp %>%
+  full_join(metro_income, by = c("metro_id", "metro_name", "year"))
+
+# shifting econ year
+metro_econ_next_year <- metro_econ_year %>%
+  mutate(
+    season = year - 1,
+    econ_year = year
+  )
+
+final_merged_panel <- nfl_metro_season %>%
+  left_join(
+    metro_econ_next_year,
+    by = c("metro_id", "metro_name", "season")
+  ) %>%
+  select(-year) %>%
+  arrange(season, metro_id)
+
+
+# output
+write_csv(final_merged_panel, "final_merged_panel.csv")
+```
+
+
