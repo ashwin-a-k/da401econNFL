@@ -1,0 +1,147 @@
+metro_id,metro_name,county_fips,county_name,state_abbr,assignment_order,selection_style
+ATL,Atlanta Metro,13121,Fulton,GA,1,compact_core
+ATL,Atlanta Metro,13089,DeKalb,GA,2,compact_core
+ATL,Atlanta Metro,13067,Cobb,GA,3,compact_core
+ATL,Atlanta Metro,13135,Gwinnett,GA,4,compact_core
+ATL,Atlanta Metro,13063,Clayton,GA,5,compact_core
+BAL,Baltimore Metro,24510,Baltimore (Independent City),MD,1,compact_core
+BAL,Baltimore Metro,24005,Baltimore,MD,2,compact_core
+BAL,Baltimore Metro,24003,Anne Arundel,MD,3,compact_core
+BAL,Baltimore Metro,24027,Howard,MD,4,compact_core
+BAL,Baltimore Metro,24025,Harford,MD,5,compact_core
+BOS,Boston Metro,25025,Suffolk,MA,1,compact_core
+BOS,Boston Metro,25017,Middlesex,MA,2,compact_core
+BOS,Boston Metro,25021,Norfolk,MA,3,compact_core
+BOS,Boston Metro,25009,Essex,MA,4,compact_core
+BUF,Buffalo Metro,36029,Erie,NY,1,compact_core
+BUF,Buffalo Metro,36063,Niagara,NY,2,compact_core
+CHI,Chicago Metro,17031,Cook,IL,1,compact_core
+CHI,Chicago Metro,17043,DuPage,IL,2,compact_core
+CHI,Chicago Metro,17097,Lake,IL,3,compact_core
+CHI,Chicago Metro,17197,Will,IL,4,compact_core
+CHI,Chicago Metro,17089,Kane,IL,5,compact_core
+CIN,Cincinnati Metro,39061,Hamilton,OH,1,compact_core
+CIN,Cincinnati Metro,39017,Butler,OH,2,compact_core
+CIN,Cincinnati Metro,39025,Clermont,OH,3,compact_core
+CIN,Cincinnati Metro,39165,Warren,OH,4,compact_core
+CIN,Cincinnati Metro,21117,Kenton,KY,5,compact_core
+CIN,Cincinnati Metro,21037,Campbell,KY,6,compact_core
+CIN,Cincinnati Metro,21015,Boone,KY,7,compact_core
+CLE,Cleveland Metro,39035,Cuyahoga,OH,1,compact_core
+CLE,Cleveland Metro,39085,Lake,OH,2,compact_core
+CLE,Cleveland Metro,39093,Lorain,OH,3,compact_core
+CLE,Cleveland Metro,39103,Medina,OH,4,compact_core
+CLE,Cleveland Metro,39055,Geauga,OH,5,compact_core
+CLT,Charlotte Metro,37119,Mecklenburg,NC,1,compact_core
+CLT,Charlotte Metro,37071,Gaston,NC,2,compact_core
+CLT,Charlotte Metro,37179,Union,NC,3,compact_core
+CLT,Charlotte Metro,37025,Cabarrus,NC,4,compact_core
+CLT,Charlotte Metro,45091,York,SC,5,compact_core
+DAL,Dallas Metro,48113,Dallas,TX,1,compact_core
+DAL,Dallas Metro,48439,Tarrant,TX,2,compact_core
+DAL,Dallas Metro,48085,Collin,TX,3,compact_core
+DAL,Dallas Metro,48121,Denton,TX,4,compact_core
+DAL,Dallas Metro,48139,Ellis,TX,5,compact_core
+DEN,Denver Metro,08031,Denver,CO,1,compact_core
+DEN,Denver Metro,08059,Jefferson,CO*,2,compact_core
+DEN,Denver Metro,08005,Arapahoe,CO,3,compact_core
+DEN,Denver Metro,08001,Adams,CO*,4,compact_core
+DEN,Denver Metro,08035,Douglas,CO,5,compact_core
+DET,Detroit Metro,26163,Wayne,MI,1,compact_core
+DET,Detroit Metro,26125,Oakland,MI,2,compact_core
+DET,Detroit Metro,26099,Macomb,MI,3,compact_core
+GB,Green Bay Metro,55009,Brown,WI,1,compact_core
+GB,Green Bay Metro,55087,Outagamie,WI,2,compact_core
+HOU,Houston Metro,48201,Harris,TX,1,compact_core
+HOU,Houston Metro,48157,Fort Bend,TX,2,compact_core
+HOU,Houston Metro,48339,Montgomery,TX,3,compact_core
+HOU,Houston Metro,48039,Brazoria,TX,4,compact_core
+HOU,Houston Metro,48167,Galveston,TX,5,compact_core
+IND,Indianapolis Metro,18097,Marion,IN,1,compact_core
+IND,Indianapolis Metro,18057,Hamilton,IN,2,compact_core
+IND,Indianapolis Metro,18063,Hendricks,IN,3,compact_core
+IND,Indianapolis Metro,18081,Johnson,IN,4,compact_core
+IND,Indianapolis Metro,18011,Boone,IN,5,compact_core
+JAX,Jacksonville Metro,12031,Duval,FL,1,compact_core
+JAX,Jacksonville Metro,12019,Clay,FL,2,compact_core
+JAX,Jacksonville Metro,12109,St. Johns,FL,3,compact_core
+JAX,Jacksonville Metro,12089,Nassau,FL,4,compact_core
+KC,Kansas City Metro,29095,Jackson,MO,1,compact_core
+KC,Kansas City Metro,29047,Clay,MO,2,compact_core
+KC,Kansas City Metro,29165,Platte,MO,3,compact_core
+KC,Kansas City Metro,29037,Cass,MO,4,compact_core
+KC,Kansas City Metro,20091,Johnson,KS,5,compact_core
+KC,Kansas City Metro,20209,Wyandotte,KS,6,compact_core
+LAX,Los Angeles Metro,06037,Los Angeles,CA,1,compact_core
+LAX,Los Angeles Metro,06059,Orange,CA,2,compact_core
+LAX,Los Angeles Metro,06111,Ventura,CA,3,compact_core
+LV,Las Vegas Metro,32003,Clark,NV,1,compact_core
+MIA,Miami Metro,12086,Miami-Dade,FL,1,compact_core
+MIA,Miami Metro,12011,Broward,FL,2,compact_core
+MIA,Miami Metro,12099,Palm Beach,FL,3,compact_core
+MIN,Minneapolis Metro,27053,Hennepin,MN,1,compact_core
+MIN,Minneapolis Metro,27123,Ramsey,MN,2,compact_core
+MIN,Minneapolis Metro,27037,Dakota,MN,3,compact_core
+MIN,Minneapolis Metro,27003,Anoka,MN,4,compact_core
+MIN,Minneapolis Metro,27163,Washington,MN,5,compact_core
+NO,New Orleans Metro,22071,Orleans,LA,1,compact_core
+NO,New Orleans Metro,22051,Jefferson,LA,2,compact_core
+NO,New Orleans Metro,22103,St. Tammany,LA,3,compact_core
+NO,New Orleans Metro,22087,St. Bernard,LA,4,compact_core
+NSH,Nashville Metro,47037,Davidson,TN,1,compact_core
+NSH,Nashville Metro,47187,Williamson,TN,2,compact_core
+NSH,Nashville Metro,47149,Rutherford,TN,3,compact_core
+NSH,Nashville Metro,47165,Sumner,TN,4,compact_core
+NSH,Nashville Metro,47189,Wilson,TN,5,compact_core
+NYC,New York Metro,36005,Bronx,NY,1,compact_core
+NYC,New York Metro,36047,Kings,NY,2,compact_core
+NYC,New York Metro,36061,New York,NY,3,compact_core
+NYC,New York Metro,36081,Queens,NY,4,compact_core
+NYC,New York Metro,36085,Richmond,NY,5,compact_core
+NYC,New York Metro,36059,Nassau,NY,6,compact_core
+NYC,New York Metro,36119,Westchester,NY,7,compact_core
+NYC,New York Metro,34003,Bergen,NJ,8,compact_core
+NYC,New York Metro,34017,Hudson,NJ,9,compact_core
+NYC,New York Metro,34013,Essex,NJ,10,compact_core
+NYC,New York Metro,34039,Union,NJ,11,compact_core
+NYC,New York Metro,34031,Passaic,NJ,12,compact_core
+PHL,Philadelphia Metro,42101,Philadelphia,PA,1,compact_core
+PHL,Philadelphia Metro,42045,Delaware,PA,2,compact_core
+PHL,Philadelphia Metro,42091,Montgomery,PA,3,compact_core
+PHL,Philadelphia Metro,42017,Bucks,PA,4,compact_core
+PHL,Philadelphia Metro,42029,Chester,PA,5,compact_core
+PHL,Philadelphia Metro,34007,Camden,NJ,6,compact_core
+PHL,Philadelphia Metro,34005,Burlington,NJ,7,compact_core
+PHL,Philadelphia Metro,34015,Gloucester,NJ,8,compact_core
+PHX,Phoenix Metro,04013,Maricopa,AZ,1,compact_core
+PHX,Phoenix Metro,04021,Pinal,AZ,2,compact_core
+PIT,Pittsburgh Metro,42003,Allegheny,PA,1,compact_core
+PIT,Pittsburgh Metro,42129,Westmoreland,PA,2,compact_core
+PIT,Pittsburgh Metro,42125,Washington,PA,3,compact_core
+PIT,Pittsburgh Metro,42019,Butler,PA,4,compact_core
+PIT,Pittsburgh Metro,42007,Beaver,PA,5,compact_core
+SD,San Diego Metro,06073,San Diego,CA,1,compact_core
+SEA,Seattle Metro,53033,King,WA,1,compact_core
+SEA,Seattle Metro,53061,Snohomish,WA,2,compact_core
+SEA,Seattle Metro,53053,Pierce,WA,3,compact_core
+SF,San Francisco-Oakland Metro,06075,San Francisco,CA,1,compact_core
+SF,San Francisco-Oakland Metro,06001,Alameda,CA,2,compact_core
+SF,San Francisco-Oakland Metro,06013,Contra Costa,CA,3,compact_core
+SF,San Francisco-Oakland Metro,06081,San Mateo,CA,4,compact_core
+SF,San Francisco-Oakland Metro,06085,Santa Clara,CA,5,compact_core
+SF,San Francisco-Oakland Metro,06041,Marin,CA,6,compact_core
+STL,St. Louis Metro,29510,St. Louis (Independent City),MO,1,compact_core
+STL,St. Louis Metro,29189,St. Louis,MO,2,compact_core
+STL,St. Louis Metro,29183,St. Charles,MO,3,compact_core
+STL,St. Louis Metro,29099,Jefferson,MO,4,compact_core
+STL,St. Louis Metro,17119,Madison,IL,5,compact_core
+STL,St. Louis Metro,17163,St. Clair,IL,6,compact_core
+TB,Tampa Metro,12057,Hillsborough,FL,1,compact_core
+TB,Tampa Metro,12103,Pinellas,FL,2,compact_core
+TB,Tampa Metro,12101,Pasco,FL,3,compact_core
+WAS,Washington Metro,11001,District of Columbia,DC,1,compact_core
+WAS,Washington Metro,24033,Prince George's,MD,2,compact_core
+WAS,Washington Metro,24031,Montgomery,MD,3,compact_core
+WAS,Washington Metro,51013,Arlington,VA,4,compact_core
+WAS,Washington Metro,51919,"Fairfax, Fairfax City + Falls Church",VA*,5,compact_core
+WAS,Washington Metro,51510,Alexandria (Independent City),VA,6,compact_core
